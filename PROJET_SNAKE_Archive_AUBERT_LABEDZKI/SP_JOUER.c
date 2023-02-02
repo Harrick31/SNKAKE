@@ -199,7 +199,7 @@ int TestFinPartie()
     getch();
     cls();
 }
-
+test
 
 int SauvegardeScore();
 
