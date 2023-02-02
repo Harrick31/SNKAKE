@@ -57,7 +57,9 @@ typedef struct {
 // DONNEES POMME
 //******************
  typedef struct {
-   TYPE_POINT pos;
+    TYPE_POINT pos;
+    TYPE_POINT pos_bad;
+    TYPE_POINT old_bad_pos;
 } TYPE_POMME;
 
 #endif // MESTYPES_H_INCLUDED
