@@ -4,17 +4,17 @@
 #include "SP_GESTION_JEU.h"
 
 /*===================================================================================
-/ Nom SÃ©mantique : FONCTION SP_Gestion_Clavier
+/ Nom Sémantique : FONCTION SP_Gestion_Clavier
 
-/ SÃ©mantique : GÃ¨re la dÃ©tection des Ã©vÃ¨nements clavier sur les touches de direction et
-            touche entrÃ©e
-/ ParamÃ¨tres :
-/ direction (OUT) - entier : Contient la direction sollicitÃ©e par l'utilisateur
+/ Sémantique : Gère la détection des évènements clavier sur les touches de direction et
+            touche entrée
+/ Paramètres :
+/ direction (OUT) - entier : Contient la direction sollicitée par l'utilisateur
 / DROITE = 0 , GAUCHE = 1 , BAS = 2 , HAUT = 3, ENTER = 4, ESCAPE = 5 et -1 SINON
-/ PrÃ©-condition : AUCUNE
+/ Pré-condition : AUCUNE
 / Post conditions : la direction vaut -1,0,1,2,3,4,5
 / ====================================================================================
-/ Test : le chiffre renvoyÃ© correspond Ã  la direction appuyÃ©e
+/ Test : le chiffre renvoyé correspond à la direction appuyée
 / ====================================================================================*/
 int SP_Gestion_Clavier(){
     char direction ;
@@ -32,7 +32,6 @@ int SP_Gestion_Clavier(){
         case KEY_RIGHT : dir = DROITE ; break;
         case KEY_ENTER : dir = ENTER  ; break;
         case KEY_ESCAPE: dir = ESCAPE ; break;
-        printf("ceci est un test"); 
         }
     }
     else {dir=-1;}

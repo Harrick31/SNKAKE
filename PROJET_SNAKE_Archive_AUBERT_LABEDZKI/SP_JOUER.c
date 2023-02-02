@@ -19,9 +19,6 @@
 / ====================================================================================*/
 
 int AffichageStade(TYPE_PARAM_JEU *PT_Stade){
-//
-//    PT_Stade->H_stade = 25;
-//    PT_Stade->L_stade = 50;
 
     cls();
     int i, j;
@@ -81,7 +78,7 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
     int quitter =0;
     int dir=DROITE;
     TYPE_POINT tete;
-
+    PT_Snake->sens = -1;
 
     do {
         PT_Snake->direction = SP_Gestion_Clavier();
@@ -94,13 +91,13 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
 
         switch (PT_Snake->direction)
         {
-        case 0  : dir = DROITE; PT_Snake->tete.x++; PT_Snake->sens = 0; if(PT_Snake->direction == PT_Snake->sens) {PT_Snake->tete.x++;};  break;
+        case 0  : if(PT_Snake->sens  == 2) {PT_Snake->tete.x--;dir = GAUCHE;} else {PT_Snake->tete.x++; PT_Snake->sens  = 1;dir = DROITE;};break;
 
-        case 1  : dir = GAUCHE; PT_Snake->tete.x--; PT_Snake->sens = 1; if(PT_Snake->direction == PT_Snake->sens) {PT_Snake->tete.x--;};  break;
+        case 1  : if(PT_Snake->sens == 1) {PT_Snake->tete.x++;dir = DROITE;} else {PT_Snake->tete.x--; PT_Snake->sens  = 2;dir = GAUCHE;};break;
 
-        case 2  : dir = BAS; PT_Snake->tete.y++; PT_Snake->sens = 2; if(PT_Snake->direction == PT_Snake->sens) {PT_Snake->tete.y++;}; break;
+        case 2  : if(PT_Snake->sens == 4) {PT_Snake->tete.y--;dir = HAUT;} else {PT_Snake->tete.y++; PT_Snake->sens  = 3;dir = BAS;};break;
 
-        case 3  : dir = HAUT; PT_Snake->tete.y--; PT_Snake->sens = 3; if(PT_Snake->direction == PT_Snake->sens) {PT_Snake->tete.y--;}; break;
+        case 3  : if(PT_Snake->sens == 3) {PT_Snake->tete.y++;dir = BAS;} else {PT_Snake->tete.y--; PT_Snake->sens  = 4;dir = HAUT;};break;
 
         case -1 :
               if (dir == DROITE) {PT_Snake->tete.x++;}
@@ -121,8 +118,12 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
         PT_Snake->posTail[PT_Snake->tailLength-1].y = tete.y;
 
         if (PT_Snake->tete.y <= 1 || PT_Snake->tete.y >= Stade.H_stade + 1  || PT_Snake->tete.x <= -1 || PT_Snake->tete.x >= Stade.L_stade + 1 ) {quitter =1;}
-        if (PT_Snake->tete.y <= 1 || PT_Snake->tete.y >= Stade.H_stade + 1  || PT_Snake->tete.x <= -1 || PT_Snake->tete.x >= Stade.L_stade + 1 ) {quitter =1;}
 
+        for (int i=0 ;i<=PT_Snake->tailLength; i++)
+        {
+            if (PT_Snake->tete.x == PT_Snake->posTail[i].x && PT_Snake->tete.y == PT_Snake->posTail[i].y){quitter =1;}
+
+        }
 
         if (TestPommeSnake(PT_Snake, PT_Pomme, Stade))// Si Testpomme = Vrai alors on affiche la pomme ailleurs
         {
@@ -157,17 +158,11 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
     }while(quitter == 0);
 
     TestFinPartie();
-
-//    cls();
-//    gotoxy(35,10); printf("                  GAME OVER                  ");
-//    gotoxy(35,11); printf("Appuyez sur n'importe quel touche pour revenir au menu principal  ");
-//    getch();
-//    cls();
 }
 
 void InitialisationSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME Pomme ){
 
-    PT_Snake->SnakeLength = 5;
+    PT_Snake->SnakeLength = 12;
     PT_Snake->tailLength =  PT_Snake->SnakeLength -1;
 
     do{
@@ -206,8 +201,6 @@ int TestFinPartie()
 }
 
 
-
-
 int SauvegardeScore();
 
 int AffichageAccueil();
@@ -242,7 +235,7 @@ int TestPommeSnake(TYPE_SNAKE *PT_Snake, TYPE_POMME *PT_Pomme, TYPE_PARAM_JEU St
 int AffichagePomme(TYPE_POMME Pomme)
 {
     gotoxy(Pomme.pos.x,Pomme.pos.y);
-//    setColor(Pomme.Color);
+    //setColor(Pomme.Color);
     printPomme();
     return 0;
 }
