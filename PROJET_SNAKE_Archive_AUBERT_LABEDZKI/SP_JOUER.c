@@ -200,7 +200,6 @@ int TestFinPartie()
     cls();
 }
 
-
 int SauvegardeScore();
 
 int AffichageAccueil();
