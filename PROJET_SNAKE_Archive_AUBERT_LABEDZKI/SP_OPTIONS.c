@@ -55,7 +55,7 @@ void AFFICHER_PARAMETRES(TYPE_PARAM_JEU* PT_ParamJeu)
 }
 
 void Param_init (TYPE_PARAM_JEU* PT_ParamJeu)
-{ (*PT_ParamJeu).couleur_snake = 0; (*PT_ParamJeu).couleur_stade = 4; (*PT_ParamJeu).difficulte = 100;}
+{ (*PT_ParamJeu).couleur_snake = 0; (*PT_ParamJeu).couleur_stade = 4; (*PT_ParamJeu).difficulte = 100;  PT_ParamJeu->H_stade = 25; PT_ParamJeu->L_stade = 100;}
 
 // =============================================================================
 // Nom : SP_INIT_PARAMETRES_STADE
@@ -229,9 +229,9 @@ void CHOIX_DIFFICULTE(TYPE_PARAM_JEU* PT_ParamJeu)
     case 2 : pos_y++; break;
     case 3 : pos_y--; break;
     case 4 :
-            if (pos_y==14) {(*PT_ParamJeu).difficulte = 200;  PT_ParamJeu->H_stade = 35; PT_ParamJeu->L_stade = 100; level="NORMAL";};
-            if (pos_y==15) {(*PT_ParamJeu).difficulte = 100;  PT_ParamJeu->H_stade = 25; PT_ParamJeu->L_stade = 50; level="DIFFICILE";}
-            if (pos_y==16) {(*PT_ParamJeu).difficulte = 50 ;  PT_ParamJeu->H_stade = 15; PT_ParamJeu->L_stade = 25; level="IMPOSSIBLE";}
+            if (pos_y==14) {(*PT_ParamJeu).difficulte = 100;  PT_ParamJeu->H_stade = 25; PT_ParamJeu->L_stade = 100; level="NORMAL";};
+            if (pos_y==15) {(*PT_ParamJeu).difficulte = 80;  PT_ParamJeu->H_stade = 25; PT_ParamJeu->L_stade = 80; level="DIFFICILE";}
+            if (pos_y==16) {(*PT_ParamJeu).difficulte = 30 ;  PT_ParamJeu->H_stade = 15; PT_ParamJeu->L_stade = 60; level="IMPOSSIBLE";}
             if (pos_y==17)  quitter =1;
             break;
     case 5 : quitter = 1;
