@@ -50,7 +50,9 @@ void ACCUEIL(TYPE_PARAM_JEU* PT_ParamJeu, TYPE_JOUEUR* PT_Joueur, TYPE_POMME* PT
             if (pos_y==14){
             AffichageStade(PT_ParamJeu);
             CreationPomme(PT_Pomme, *PT_ParamJeu);
+            CreationBadPomme(PT_Pomme, *PT_ParamJeu);
             AffichagePomme(*PT_Pomme);
+            AffichageBadPomme(*PT_Pomme);
             InitialisationSerpent(PT_Snake, *PT_ParamJeu, *PT_Pomme);
             EvolutionSerpent(PT_Snake, *PT_ParamJeu, PT_Pomme);}
 

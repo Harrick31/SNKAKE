@@ -86,6 +86,7 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
         PT_Snake->old_tail.x = PT_Snake->posTail[0].x;
         PT_Snake->old_tail.y = PT_Snake->posTail[0].y;
 
+
         tete.x = PT_Snake->tete.x;
         tete.y = PT_Snake->tete.y;
 
@@ -125,10 +126,16 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
 
         }
 
+        if (TestBadPommeSnake(PT_Snake, PT_Pomme, Stade)) {quitter = 1;}
+
         if (TestPommeSnake(PT_Snake, PT_Pomme, Stade))// Si Testpomme = Vrai alors on affiche la pomme ailleurs
         {
             CreationPomme(PT_Pomme, Stade);
             AffichagePomme(*PT_Pomme);
+            PT_Pomme->old_bad_pos.x = PT_Pomme->pos_bad.x;
+            PT_Pomme->old_bad_pos.y = PT_Pomme->pos_bad.y;
+            CreationBadPomme(PT_Pomme, Stade);
+            AffichageBadPomme(*PT_Pomme);
 
             PT_Snake->tailLength++;
             PT_Snake->posTail[PT_Snake->tailLength-1].x = PT_Snake->tete.x;
@@ -162,12 +169,13 @@ void EvolutionSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME *PT
 
 void InitialisationSerpent(TYPE_SNAKE *PT_Snake, TYPE_PARAM_JEU Stade, TYPE_POMME Pomme ){
 
-    PT_Snake->SnakeLength = 12;
+    PT_Snake->SnakeLength = 5;
     PT_Snake->tailLength =  PT_Snake->SnakeLength -1;
 
     do{
         PT_Snake->tete.x  = random();
         PT_Snake->tete.y  = random();
+
     }while ( PT_Snake->tete.x < 6 || PT_Snake->tete.x > Stade.L_stade || PT_Snake->tete.y < 2 || PT_Snake->tete.y > Stade.H_stade);
 
     for (int i=0; i<=PT_Snake->tailLength; i++){
@@ -187,6 +195,15 @@ void CreationPomme(TYPE_POMME *PT_Pomme, TYPE_PARAM_JEU Stade)
         PT_Pomme->pos.y  = random();
 
     }while ( PT_Pomme->pos.x < 6 || PT_Pomme->pos.x > Stade.L_stade || PT_Pomme->pos.y < 3 || PT_Pomme->pos.y > Stade.H_stade);
+}
+
+void CreationBadPomme(TYPE_POMME *PT_Pomme, TYPE_PARAM_JEU Stade)
+{
+    do{
+        PT_Pomme->pos_bad.x  = random();
+        PT_Pomme->pos_bad.y  = random();
+
+    }while ( PT_Pomme->pos_bad.x < 6 || PT_Pomme->pos_bad.x > Stade.L_stade || PT_Pomme->pos_bad.y < 3 || PT_Pomme->pos_bad.y > Stade.H_stade || PT_Pomme->pos.x == PT_Pomme->pos_bad.x || PT_Pomme->pos.y == PT_Pomme->pos_bad.y);
 }
 
 int ModificationDesParametres();
@@ -231,10 +248,28 @@ int TestPommeSnake(TYPE_SNAKE *PT_Snake, TYPE_POMME *PT_Pomme, TYPE_PARAM_JEU St
     return PT_Snake->tete.x == PT_Pomme->pos.x && PT_Snake->tete.y == PT_Pomme->pos.y ;
 }
 
+int TestBadPommeSnake(TYPE_SNAKE *PT_Snake, TYPE_POMME *PT_Pomme, TYPE_PARAM_JEU Stade)
+{
+    return PT_Snake->tete.x == PT_Pomme->pos_bad.x && PT_Snake->tete.y == PT_Pomme->pos_bad.y ;
+}
+
 int AffichagePomme(TYPE_POMME Pomme)
 {
+
     gotoxy(Pomme.pos.x,Pomme.pos.y);
     //setColor(Pomme.Color);
+    printPomme();
+
+
+    return 0;
+}
+
+int AffichageBadPomme(TYPE_POMME Pomme)
+{
+    gotoxy(Pomme.old_bad_pos.x,Pomme.old_bad_pos.y);
+    printf(" ");
+    gotoxy(Pomme.pos_bad.x,Pomme.pos_bad.y);
+    setColor(0);
     printPomme();
     return 0;
 }
